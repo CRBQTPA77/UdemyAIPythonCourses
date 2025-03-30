@@ -1,4 +1,5 @@
 # Variables and constants
+# adding a new commint from Git Hub
 
 # input an number and use int to make sure its an integer.  if we don't use int it will be a string and will print with single quotes around it
 age = int(input('type your age: '))
