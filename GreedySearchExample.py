@@ -3,8 +3,20 @@
 # here we are starting in a city called Arad and for each neighboring (adjacent)
 # city it will select the one with the shorted straight line distnace to the 
 # destination city called Bucharest.  It then starts at that city and repeats 
-# the process to select the next city the the shortest straight line distance to
-# the destination Bucharest
+# the process to select the next city with the shortest straight line distance to
+# the destination Bucharest until we reach the destination.  the path it selects should
+# be the shortest path to Bucharest.
+
+'''
+# the following classes are defined and they each store their objects in an array
+# however Python does not a data element called array so a list is used.
+
+classes are:
+1 - Vertex with objects label and distance_objective and an "array" aka list
+# called self.adjacent is created that 
+
+2 - Adjacent
+'''
 
 class Vertex:
   # this will execute each time we create a new object aka an instance
@@ -19,13 +31,14 @@ class Vertex:
     self.visited = False
     # the next line recieves the straight line distance to Bucharest as a parameter
     self.distance_objective = distance_objective
-    # creating an empty list that will eventually store the cities adjacent or 
+    # creating an empty array (same as a list[]) that will eventually store the cities adjacent or 
     # connected to the starting city for each run.  The first ones will be the 
     # adjacent citys to Arad which are Zerind, Sibiu, and Timisoara
     self.adjacent = []
 
   def add_adjacent(self, adjacent):
-    # next line access the list "self.adjacent" and adds all of the connections
+    # next line access the list "self.adjacent" and appends all of the connections
+    # to the self.adjacent list
     self.adjacent.append(adjacent)
 
   def print_adjacent(self):
@@ -40,9 +53,15 @@ class Adjacent:
     self.cost = cost
 
 class Graph:
-  # thse values are the heuristics which are the straight line distnace from
+  # these values are the heuristics which are the straight line distnace from
   # each city to the distination city called Buchrest.  This is the "as the crow
   # flies" distance, not necessarily the path that has an actual road on it
+
+  # When the program starts, the Vertex is the city you are which is Arad.  The adjacent cities in the second list 
+  # are the cities that are directly connected to the vertex.  once the adjacent wit the shortest
+  # straight line distance to Bucharest is found, that adjacent becomes the next
+  # vertex and then it's adjacents are evaluated looking for the one with the 
+  # shortest SLD (straight line distance) to Bucharest
   arad = Vertex('Arad', 366)
   zerind = Vertex('Zerind', 374)
   oradea = Vertex('Oradea', 380)
@@ -125,7 +144,7 @@ class OrderedArray:
     # The 'last_position' keeps track of the last filled index in the array.
     # It's initialized to -1 to signify that the array is empty.
     # The first valid index in the array is 0, so -1 acts as a placeholder for an empty array.
-    # negative one -1 is used because it is outside the range of valid index positions
+    # -1 is used because it is outside the range of valid index positions
     # which start at ZERO
     self.last_position = -1
 
@@ -150,7 +169,8 @@ class OrderedArray:
       # line with "...range(0,11)"
       for i in range(self.last_position + 1):
         # ADDED .LABEL AND .DISTANCE_OBJECTIVE FOR MAP USE CASE
-        print('row is the array:', i, ' - ', self.values[i].label, ' - ', self.values[i].distance_objective)
+        print('Current row in the array is', i, ' - current city is', self.values[i].label, ' - SLD to Bucharest is', self.values[i].distance_objective, 'km')
+        # print('printing i', self.values[i])
 
   # CHANGED VALUE TO VERTEX FOR MAP USE CASE
   def insert(self, vertex):
@@ -237,13 +257,15 @@ class Greedy:
     # self.objective is a variable in the new instance of Greedy
     self.objective = objective
     # next line sets found to false since we just passed the destination city
-    # and creaed the object.  If we were already at the destination, we would not
+    # and created the object.  If we were already at the destination, we would not
     # need to use Greedy to find the shorted path.
     self.found = False
   
   def search(self, current):
     # label, visited, distance_objective, and 
     # adjacent were all created in the Vertex class
+    # these are all attributes of the object called current.  This is how we
+    # can have multiple values within the array at the same index position.
     print('----------- ')
     print('Current: {}'.format(current.label))
     current.visited = True
